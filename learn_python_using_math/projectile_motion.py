@@ -1,53 +1,47 @@
 import matplotlib.pyplot as plt
 import math
 
-# draw your graph 
+# draw your graph
 
 def draw_graph(x, y):
     plt.plot(x, y)
-    plt.title('Projectile Motion')
     plt.xlabel('x-coordinate')
     plt.ylabel('y-coordinate')
-    plt.show()
- 
-# for the floating time interval   
-def frange(start, final, increment):
+    plt.title('Projectile Motion')
+    # put extra care here if you put the plt.show() here the code would not combine the inputs
     
+def frange(start, final, increment):
     numbers = []
+    
     while start < final:
         numbers.append(start)
         start = start + increment
-    
+        
     return numbers
 
-# now applie math
-
-def draw_trajectory(u, theta):
+def trajectory(u, theta):
+    # define constants
+    g = 9.8 
     theta = math.radians(theta)
-    g = 9.8
-    
-    #airborne duration
-    t_flight = 2*u*math.sin(theta)/g
-    # define the interval 
-    intervals = frange(0, t_flight, 0.001)
-    #make empty list for the coordinates
+    t_flight = (2*u*math.sin(theta)) / g
+    # set the time interval
+    interval = frange(0, t_flight, 0.001)
+    # now for the coordinates
     x = []
     y = []
     
-    for t in intervals:
+    for t in interval:
         x.append(u*math.cos(theta)*t)
         y.append(u*math.sin(theta)*t - 0.5*g*t**2)
         
     draw_graph(x, y)
     
-#if __name__ == '__main__':
-    #u = float(input('Enter the initial velocity: '))
-    #theta = float(input('The initial angle: '))
-    #draw_trajectory(u, theta)
 if __name__ == '__main__':
-    u_list = [40, 60, 80]
+    # List of three different initial velocities
+    u_list = [20, 40, 60]
     theta = 45
     for u in u_list:
-        draw_trajectory(u, theta)
-    plt.legend(['40', '60', '80'])
+        trajectory(u, theta)
+    # Add a legend an show the graph
+    plt.legend(['20', '40', '60'])
     plt.show()
